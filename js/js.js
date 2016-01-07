@@ -10,9 +10,11 @@ $(document).ready( function () {
     "iDisplayLength": 15,
     "sorting": false
   });
-  
+    //$(".jumbotron").hide().fadeIn();
+    
+
 });
 
-$(window).load(function(){  
-  $("#fadein").slideDown();
+$(window).load(function(){
+  $(".container-fluid").hide().fadeIn(); 
 });

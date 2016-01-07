@@ -39,7 +39,7 @@
     </nav>
     <!-- Jumpbotron -->
     <div class="jumbotron sb-page-header">
-      <div id = "fadein" class="container" style="margin-top: 20px;">
+      <div class="container" style="margin-top: 20px;">
         <h2>Welcome!</h2> <i><h1><?php echo $cname; ?></h1></i>
         <h4><?php echo date('l jS \of F Y');?> <span id="hours"><?=date('h');?></span>:<span id="minutes"><?=date('i');?></span>:<span id="seconds"><?=date('s');?></span> <span id="seconds"><?=date('A');?></span></h4> 
       </div>

@@ -33,16 +33,17 @@ h2{
 }
 .sb-page-header {
     padding: 30px 15px;
-    color: rgba(255,255,255,.8);
+    color: #FFFFF3;    
     background-color: #b84d45;
-    background-image: url(../img/bg.png);
     margin-bottom: 40px;
+    /*color: rgba(255,255,255,.8);background-color: #b84d45; background-image: url(../img/bg.png);*/
 }
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
   position: relative;
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 .footer {

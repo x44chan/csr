@@ -1,5 +1,6 @@
 <?php 
 	if(!isset($_GET['view'])){		
+		mysqli_select_db($conn, 'csr');
 		if(isset($_POST['datefr']) && isset($_POST['dateto'])){
 			$strt = mysql_escape_string($_POST['datefr']);
 			$end = mysql_escape_string($_POST['dateto']);
@@ -24,7 +25,7 @@
 				<div class = "row" style="margin-bottom: 10px;">
 					<div class="col-xs-12">
 				    	<div align = "left">
-							<i><h3 style = "text-decoration: underline;"><span class = "icon-file-text2"></span> Customer\'s Service Report</h3></i>
+							<i><h3 style = "text-decoration: underline;"><span class = "icon-power-cord"></span> Network Connection Service Report</h3></i>
 							'.$notifs.'
 						</div>
 				    </div>
@@ -33,7 +34,7 @@
 			<div class = "row" style="margin-bottom: 10px;">
 				<div class="col-xs-12" align = "center">
 			    	<div>
-						<i><h4>Search by Date Range</h4></i>
+						<i><h4>Search</h4></i>
 					</div>
 			    </div>
 			</div>
@@ -45,7 +46,7 @@
 						<label style = "margin-left: 10px;"for = "datestrt">Date To:</label>
 						<input required type = "date" class = "form-control" name = "dateto" value = "'.$end.'"/>					
 						<button style = "margin-left: 10px;"class = "btn btn-primary" name = "daterange"><span class="icon-search"></span> Search</button>
-						<a href = "?module=daterange" class = "btn btn-danger" name = "daterange"><span class="icon-spinner11"></span> Clear</a>
+						<a href = "?module=netcon" class = "btn btn-danger" name = "daterange"><span class="icon-spinner11"></span> Clear</a>
 					</div>
 				</div>
 			</form>
@@ -64,7 +65,7 @@
 				<table class = "table table-hover" id = "myTable2">
 					<thead>
 						<th>Date</th>
-						<th>Technician</th>
+						<th>Type</th>
 						<th>Time In - Time Out</th>
 						<th>Action</th>
 					</thead>
@@ -74,11 +75,11 @@
 				if(isset($_GET['module'])){
 					$module = 'module='. $_GET['module'] .'&';
 				}else{
-					$module = 'module=daterange&';
+					$module = 'module=netcon&';
 				}
 				echo '<tr>';
 					echo '<td>' . date("M j, Y", strtotime($row['csrdate'])) . '</td>';
-					echo '<td>' . $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname'].'</td>';
+					echo '<td>Network Connections</td>';
 					echo '<td>' . $row['csrtimein'] . ' - ' . $row['csrtimeout'] . '</td>';
 					echo '<td><a style = "width: 100px;" target = "_blank" href = "?'.$module.'view='.$row['csr_id'] .'" class = "btn btn-primary"><span class = "icon-eye"></span> View</a></td>';
 				echo '</tr>';
@@ -100,48 +101,43 @@
 		<div class = "row">
 			<div class="col-xs-12">
 		    	<div align = "center"class="page-header">
-					<h2><span class = "icon-file-text2"></span> Customer\'s Service Report</h2>
+					<h2><span class = "icon-power-cord"></span> Network Connection Service Report</h2>
 					
 				</div>
 		    </div>
 		</div>';
 			while($row = $result->fetch_assoc()){
 ?>
-
 		<div class = "row">
-			<div class="col-xs-7 col-sm-7 col-md-7" >
+			<div class="col-xs-4 col-sm-4 col-md-4" >
 	        	<label for="usrname"> Customer Name </label>
-	        	<i><p style="margin-left: 25px;"><?php echo $row['csrname'];?></p></i>
 	        </div>
-	        <div class="col-xs-5 col-sm-5 col-md-5">
-	        	<label for="usrname"> Tel #: </label>
-	        	<i><p style="margin-left: 25px;"><?php echo $row['csrtel'];?></p></i>
+	        <div class="col-xs-4 col-sm-4 col-md-4" >
+	        	<i><p><?php echo $row['csrname'];?></p></i>
 	        </div>
 	    </div>
 	    <div class = "row">
-	        <div class="col-xs-7 col-sm-7 col-md-7">
+	        <div class="col-xs-4 col-sm-4 col-md-4">
 	        	<label for="usrname"> Address: </label>
-	        	<i><p style="margin-left: 25px;"><?php echo $row['csradd'];?></p></i>
 	        </div>
-	        <div class="col-xs-5 col-sm-5 col-md-5">
+	        <div class="col-xs-4 col-sm-4 col-md-4">
+	        	<i><p><?php echo $row['csradd'];?></p></i>
+	        </div>
+	    </div>
+	    <div class="row">
+	        <div class="col-xs-4 col-sm-4 col-md-4">
+	        	<label for="usrname"> Tel #: </label>
+	        </div>
+	       <div class="col-xs-4 col-sm-4 col-md-4">
+	        	<i><p><?php echo $row['csrtel'];?></p></i>
+	        </div>
+	    </div>
+	    <div class="row">
+	        <div class="col-xs-4 col-sm-4 col-md-4">
 	        	<label for="usrname"> Date: </label>
-	        	<i><p style="margin-left: 25px;"><?php echo date('M j, Y', strtotime($row['csrdate']));?></i></p>
 	        </div>
-		</div>
-		<div class = "row">
-			<div class="col-xs-7">
-				<label for="usrname"> Type </label>
-				<i><p style="margin-left: 25px;"><?php echo $row['csrchck'];?></i></p>
-			</div>
-		</div>
-		<div class = "row">
-	        <div class="col-xs-3 col-sm-3 col-md-3 col-xs-offset-3">
-	        	<label for="usrname"> Time Started </label>
-	        	<i><p><?php echo $row['csrtimein'];?></i></p>
-	        </div>
-	        <div class="col-xs-3 col-sm-3 col-md-3">
-	        	<label for="usrname"> Time Finished </label>
-	        	<i><p><?php echo $row['csrtimeout'];?></i></p>
+	        <div class="col-xs-4 col-sm-4 col-md-4">
+	        	<i><p><?php echo date('M j, Y', strtotime($row['csrdate']));?></p></i>
 	        </div>
 		</div>
 		<div class="row">
@@ -317,267 +313,6 @@
 				</div>
 			</div>
 		</div>
-		<div id = "pclaptop" style="text-align: center;">
-			<div class="row" style = "  font-weight: bold;">
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					DESKTOP / LAPTOP<br>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					REPORTED PROBLEM
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					ACTION TAKEN
-				</div>
-			</div>
-			<div class="row" style="margin-bottom: 20px; font-weight: bold;">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<div style="font-size: 15px;">
-						<i>PC NAME</i>
-					</div>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<div style="font-size: 15px;">
-						<i>USER</i>
-					</div>
-				</div>
-				
-			</div>
-		<?php 
-			$sql2 = "SELECT * FROM `csr`.`csr`,`csr`.`csrpc_service`,`csr`.`csrpc` where `csr`.`csrpc`.`csrpc_id` = `csr`.`csrpc_service`.`csrpc_id` and `csr`.`csr`.`csr_id` = '$csrid' and `csr`.`csrpc_service`.`csr_id` = '$csrid'";
-			$result2 = $conn->query($sql2);
-			if($result2->num_rows > 0){
-				while ($row2 = $result2->fetch_assoc()) {
-		?>
-
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row2['csrpcname'];?></p></i>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row2['csrpcuser'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row2['csrpcprob'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row2['csrpcact'];?></p></i>
-				</div>
-			</div>
-		<?php 
-				}
-
-			}else{
-				echo '<script type="text/javascript">$(document).ready( function () { $("#pclaptop").hide();});</script>';
-			}
-		?>
-			<div class="row">
-				<div class="col-xs-12">
-					<hr>
-				</div>
-			</div>
-		</div>
-		<div id = "prinfax" <?php if($row['csrprntbrand1'] == "" && $row['csrprntbrand2'] == "" && $row['csrprntbrand3'] == ""){echo 'style = "display: none;"';}else{echo 'style = "text-align: center;"';}?>>
-			<div class="row" style = "  font-weight: bold;">
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					PRINTERS / FAX<br>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					REPORTED PROBLEM
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					ACTION TAKEN
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<div style="font-size: 15px;  font-weight: bold;">
-						<i>BRAND</i>
-					</div>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<div style="font-size: 15px;  font-weight: bold;">
-						<i>MODEL</i>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrprntbrand1'];?></p></i>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrprntmodel1'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrprntprob1'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrprntact1'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrprntbrand2'];?></p></i>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrprntmodel2'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrprntprob2'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrprntact2'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrprntbrand3'];?></p></i>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrprntmodel3'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrprntprob3'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrprntact3'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<hr>
-				</div>
-			</div>
-		</div>
-		<?php if($row['csrtellocal1'] != "" || $row['csrtellocal2'] != "" || $row['csrtellocal3'] != ""){?>
-		<div id = "telphone" style = "text-align: center;">
-			<div class="row" style = "  font-weight: bold;">
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					TELEPHONE / PABX<br>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					REPORTED PROBLEM
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					ACTION TAKEN
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<div style="font-size: 15px;  font-weight: bold;">
-						<i>LOCAL #</i>
-					</div>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<div style="font-size: 15px;  font-weight: bold;">
-						<i>USER</i>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrtellocal1'];?></p></i>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrtelusr1'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrtelprob1'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrtelact1'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrtellocal2'];?></p></i>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrtelusr2'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrtelprob2'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrtelact2'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrtellocal3'];?></p></i>
-				</div>
-				<div class="col-xs-2 col-sm-2 col-md-2">
-					<i><p><?php echo $row['csrtelusr3'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrtelprob3'];?></p></i>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-					<i><p><?php echo $row['csrtelact3'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<hr>
-				</div>
-			</div>
-		</div>
-	<?php } ?>
-	<?php if($row['csrrmrks1'] != "" || $row['csrrmrks2'] != "" || $row['csrrmrks3'] != "" || $row['csrrmrks4'] != "" || $row['csrrmrks5'] != ""){?>
-		<div id = "remarks" style = "text-align: center;">
-			<div class="row" style = "font-weight: bold;">
-				<div class="col-xs-12">
-					
-					REMARKS
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2" style="text-align:right;">
-					<b>1.</b>
-				</div>
-				<div class="col-xs-10 col-sm-10 col-md-10">
-					<i><p style="text-align: left;"><?php echo $row['csrrmrks1'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2" style="text-align:right;">
-					<b>2.</b>
-				</div>
-				<div class="col-xs-10 col-sm-10 col-md-10">
-					<i><p style="text-align: left;"><?php echo $row['csrrmrks2'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2" style="text-align:right;">
-					<b>3.</b>
-				</div>
-				<div class="col-xs-10 col-sm-10 col-md-10">
-					<i><p style="text-align: left;"><?php echo $row['csrrmrks3'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2" style="text-align:right;">
-					<b>4.</b>
-				</div>
-				<div class="col-xs-10 col-sm-10 col-md-10">
-					<i><p style="text-align: left;"><?php echo $row['csrrmrks4'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-sm-2 col-md-2" style="text-align:right;">
-					<b>5.</b>
-				</div>
-				<div class="col-xs-10 col-sm-10 col-md-10">
-					<i><p style="text-align: left;"><?php echo $row['csrrmrks5'];?></p></i>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<hr>
-				</div>
-			</div>
-		</div>
-		<?php }?>
 			<div class="row">
 				<div class="col-xs-6 col-sm-6 col-md-6" style="font-size: 17px;">
 					<i>Prepared By: <b><u><?php echo $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname'];?></u></b></i>
