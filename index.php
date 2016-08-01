@@ -17,6 +17,9 @@
         		<span class="icon-bar"></span>
         	</button>
         	<a class="navbar-brand" href="/csr"><span class="icon-office" style = "color: #009999;"></span> Netlink Advance Solutions, Inc.</a>
+        	<!--<a class="navbar-brand" rel="home" href="/csr" title="Buy Sell Rent Everyting">
+	        	<img style="max-width:100px; max-height: 40px;margin-top: -10px;" src="ubuntu.png">
+	    	</a>-->
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-left">
